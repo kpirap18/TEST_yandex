@@ -356,3 +356,219 @@ def counter():
     return nonrep_words
 
 print(counter())
+
+
+
+#################################################################
+from re import search
+s1 = "catrew"
+s2 = "ctr"
+
+count = 0
+for i in range(len(s1)):
+    if count < len(s2) and s2[count] == s1[i]:
+        count += 1
+
+if count == len(s2):
+    print("True")
+else:
+    print("False")
+
+s = [1, 2, 3, 4, 5, 1, 2, 3, 4]
+print(s.reduce(__xor__))
+
+
+
+
+
+
+"""
+Даны две строки строчных латинских символов: строка J и строка S. Символы, входящие в строку J,
+— «драгоценности», входящие в строку S — «камни». Нужно определить, какое количество символов из S
+одновременно являются «драгоценностями». Проще говоря, нужно проверить, какое количество символов из S
+входит в J.
+Это разминочная задача, к которой мы размещаем готовые решения. Она очень простая и нужна для того,
+чтобы вы могли познакомиться с нашей автоматической системой проверки решений. Ввод и вывод осуществляется
+через файлы, либо через стандартные потоки ввода-вывода, как вам удобнее."""
+import sys
+
+j = sys.stdin.readline().strip()
+s = sys.stdin.readline().strip()
+
+result = 0
+for ch in s:
+    if ch in j:
+        result += 1
+
+print(result)
+
+
+
+
+
+
+
+
+
+
+"""
+Требуется найти в бинарном векторе самую длинную последовательность единиц и вывести её длину.
+Желательно получить решение, работающее за линейное время и при этом проходящее по входному
+массиву только один раз.
+"""
+import sys
+
+count = sys.stdin.readline().strip()
+
+result = 0
+max = 0
+for i in range(int(count)):
+    el = sys.stdin.readline().strip()
+    if el == '1':
+        result += 1
+    else:
+        if max < result:
+            max = result
+        result = 0
+
+print(max if max > result else result)
+
+
+
+
+
+
+
+
+
+
+"""
+Дан упорядоченный по неубыванию массив целых 32-разрядных чисел.
+Требуется удалить из него все повторения.
+Желательно получить решение, которое не считывает входной файл целиком в память, т.е.,
+использует лишь константный объем памяти в процессе работы.
+"""
+import sys
+
+count = sys.stdin.readline().strip()
+
+ch = -1
+res = []
+for i in range(int(count)):
+    el = sys.stdin.readline().strip()
+    if el != ch:
+        res.append(el)
+    ch = el
+
+for i in res:
+    print(i)
+
+
+
+
+
+
+
+
+"""
+Дано целое число n. Требуется вывести все правильные скобочные последовательности длины 2 ⋅ n,
+упорядоченные лексикографически (см. https://ru.wikipedia.org/wiki/Лексикографический_порядок).
+В задаче используются только круглые скобки.
+Желательно получить решение, которое работает за время, пропорциональное общему количеству
+правильных скобочныхпоследовательностей в ответе, и при этом использует объём памяти,
+пропорциональный n.
+"""
+import sys
+n = int(sys.stdin.readline().strip())
+
+
+def foo(s, l, r, pairs):
+    if l == pairs and r == pairs:
+        print(s)
+    else:
+        if l < pairs:
+            foo(s + '(', l + 1, r, pairs)
+        if r < l:
+            foo(s + ')', l, r + 1, pairs)
+
+
+foo('', 0, 0, n)
+
+
+АНАГРАММЫ
+import sys
+s1 = sys.stdin.readline().strip()
+s2 = sys.stdin.readline().strip()
+
+l1 = list(s1)
+l1.sort()
+l2 = list(s2)
+l2.sort()
+
+print(1 if l1 == l2 else 0)
+
+
+
+import sys
+s1 = sys.stdin.readline().strip()
+s2 = sys.stdin.readline().strip()
+l1 = list(s1)
+l2 = list(s2)
+
+while l1:
+    li = l1.pop()
+    if li in l2:
+        l2.remove(li)
+    else:
+        print(0)
+        sys.exit()
+print(1 if not l2 else 0)
+
+
+
+import collections
+import sys
+s1 = sys.stdin.readline().strip()
+s2 = sys.stdin.readline().strip()
+l1 = list(s1)
+l2 = list(s2)
+
+c1 = collections.Counter()
+c2 = collections.Counter()
+
+for word in l1:
+    c1[word] += 1
+
+for word in l2:
+    c2[word] += 1
+
+print(1 if c1 == c2 else 0)
+""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+import sys
+
+int_list = []
+t = [0] * 101
+n = int(sys.stdin.readline().strip())
+for i in range(int(n)):
+    s = sys.stdin.readline().strip()
+    try:
+        num = int(s[:s.find(' ')])
+    except ValueError:
+        continue
+    for index, value in enumerate(s.split(' ')):
+        if index == 0:
+            continue
+        elif index == num + 1:
+            break
+        try:
+            t[int(value)] += 1
+        except ValueError:
+            pass
+    del s
+
+for i in range(101):
+    if t[i]:
+        print(' '.join([str(i)] * t[i]), end=' ')
